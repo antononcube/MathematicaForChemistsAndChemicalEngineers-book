@@ -39,10 +39,15 @@
 - Further readings
 - References
 - Problems
-* Code explanations 
+* Book's code
 - What is the code general code style?
 - Clearly state where the packages used can be found.
 - Clearly state where the find the notebooks corresponding to each chapter.
+- Consider for almost all functions to have Wolfram Function Repository (WFR) functions pages.
+- Consider WFR function that loads all code needed for:
+  - each chapter
+  - for the whole book
+- Can be local WFR objects
 * Diagrams
 - Many/most diagrams are made with Mathematica.
 - The rest are made with [[http://tentouchapps.com/grafio/][Grafio]].
