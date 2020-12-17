@@ -41,11 +41,11 @@
 - Problems
 * Code explanations 
 - What is the code general code style?
-- Clearly state the packages used can be found.
+- Clearly state where the packages used can be found.
 - Clearly state where the find the notebooks corresponding to each chapter.
 * Diagrams
 - Many/most diagrams are made with Mathematica.
 - The rest are made with [[http://tentouchapps.com/grafio/][Grafio]].
 * Mathematica problems
 - The Mathematica problems are relatively concise.
-- All problems have solutions in separate notebooks available at book's GitHub repository.
+- All problems have solutions in separate notebooks available at [[https://github.com/antononcube/MathematicaForChemistsAndChemicalEngineers-book][book's GitHub repository]].
