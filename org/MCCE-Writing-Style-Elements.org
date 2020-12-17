@@ -1,0 +1,51 @@
+#+TITLE: Mathematica for Chemists and Chemical Engineers Writing Style Elements
+#+AUTHOR: Anton Antonov, Mohammad Bahrami
+#+EMAIL: antononcube@posteo.net, mohbahrami@gmail.com 
+ 
+* Introduction
+- This document lists the principles to be followed while writing and editing the chapters of the book "Mathematica for Chemists and Chemical Engineers".
+* Book parts
+- Three main parts are considered related to the main /new to chemists/ content:
+  - Computer Science
+  - Machine Learning
+  - Mathematical / theoretical
+* Chapter themes
+- Which chapters form a "theme of learning".
+  - E.g. for a very specialized (mini) course.
+- Topics that appear across the chapters.
+* Chapter Exposition
+** General
+- "Inverted structure" for each chapter
+  - Do not hold the punchline for chapter's end.
+- Q&A style introduction
+** Structure
+- Introduction -- Q&A style 
+- Formulation of the problem
+  - The "big picture" for the problem
+	- Context
+	- Bigger or more complicated problem(s)
+  - The problem that is /needed/ to be solved.
+  - The problem relaxation or abstraction.
+	- The problem we /choose/ to solve.
+- Methods overview
+  - To solve the problem
+  - The one we /choose/ to use and present
+- Theory of the method
+- Implementation to Mathematica
+- Further extensions
+  - Readers to learn more about
+  - Software wise
+  - For the authors (future book versions)
+- Further readings
+- References
+- Problems
+* Code explanations 
+- What is the code general code style?
+- Clearly state the packages used can be found.
+- Clearly state where the find the notebooks corresponding to each chapter.
+* Diagrams
+- Many/most diagrams are made with Mathematica.
+- The rest are made with [[http://tentouchapps.com/grafio/][Grafio]].
+* Mathematica problems
+- The Mathematica problems are relatively concise.
+- All problems have solutions in separate notebooks available at book's GitHub repository.
