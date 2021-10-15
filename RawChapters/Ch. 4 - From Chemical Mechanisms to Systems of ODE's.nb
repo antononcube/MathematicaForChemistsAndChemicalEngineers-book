@@ -1,0 +1,747 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     27787,        739]
+NotebookOptionsPosition[     23252,        655]
+NotebookOutlinePosition[     23802,        674]
+CellTagsIndexPosition[     23759,        671]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+From Chemical Mechanisms to Systems of Ordinary Differential Equations\
+\>", "Title",
+ CellChangeTimes->{{3.4972202809904957`*^9, 3.497220329188077*^9}, {
+  3.497220403607439*^9, 
+  3.497220422468225*^9}},ExpressionUUID->"9bbdbbf4-c452-44ab-9aa7-\
+3a7ede3fedcc"],
+
+Cell["Anton Antonov", "Author",
+ CellChangeTimes->{{3.4449300945702057`*^9, 3.444930101932673*^9}, {
+  3.497453777637074*^9, 
+  3.4974537776762323`*^9}},ExpressionUUID->"962f543b-9270-4031-af3d-\
+b16eae6ddd61"],
+
+Cell[CellGroupData[{
+
+Cell["Kristen Aramphanapon", "Author",
+ CellChangeTimes->{{3.4974537871924267`*^9, 
+  3.4974537952516336`*^9}},ExpressionUUID->"98aacca5-db2a-4af7-96ef-\
+e0d8565f8f26"],
+
+Cell[TextData[StyleBox["book for Wiley 2009-2010", "Institution"]], \
+"Institution",
+ CellChangeTimes->{{3.44493010505249*^9, 3.444930142250931*^9}, {
+   3.460320667598672*^9, 3.460320702010445*^9}, 
+   3.497453784202903*^9},ExpressionUUID->"c85b625a-9b63-4fe0-a61a-\
+a981e50e9a04"],
+
+Cell[TextData[StyleBox["Discuss chemical kinetics. Describe the process of \
+deriving of a system of ODE\[CloseCurlyQuote]s from a system of chemical \
+equations. Discuss the symbols, and data structures needed for parsing of the \
+chemical formulas into ODE\[CloseCurlyQuote]s. Give an exercise that asks to \
+enhance the parsing to take temperature and altitude.",
+ FontFamily->"Helvetica",
+ FontSize->9]], "Abstract",
+ CellChangeTimes->{{3.497220266944055*^9, 3.4972202680225563`*^9}, {
+  3.497454046341934*^9, 
+  3.497454047590654*^9}},ExpressionUUID->"5652112f-aea2-40ca-9a24-\
+3a8d729bdd45"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.4972205555685787`*^9, 
+  3.497220585837376*^9}},ExpressionUUID->"c6fc4ead-1705-4ff6-8bba-\
+6ee3e6b779ab"],
+
+Cell["What are chemical reaction rates.", "Text",
+ CellChangeTimes->{{3.4974525303239822`*^9, 
+  3.4974525428355227`*^9}},ExpressionUUID->"5383b38b-a6c6-4d6a-b31f-\
+c129c60dc687"],
+
+Cell["What are chemical kinetics mechanisms and why we need them.", "Text",
+ CellChangeTimes->{{3.497221044851822*^9, 
+  3.497221071198616*^9}},ExpressionUUID->"cc1d3523-10fc-47f3-ba78-\
+ba2ad96a4739"],
+
+Cell["\<\
+Each equation describes a process of the transformation of a (well mixed) \
+combination of compounds into another well mixed combination of compounds. In \
+order to describe the speed of the process we need to introduce a function \
+that describes the speed of conversion that depends upon time and \
+concentrations.\
+\>", "Text",
+ CellChangeTimes->{{3.49722115075823*^9, 3.4972212373731947`*^9}, {
+  3.497221388126999*^9, 3.4972214771089077`*^9}, {3.497221668868444*^9, 
+  3.497221674411777*^9}, {3.497221979733844*^9, 
+  3.497222082532933*^9}},ExpressionUUID->"54bdff9e-2f31-444c-8ca0-\
+4b279f49a334"],
+
+Cell["System of Ordinary Differential Equations (SODE).", "Text",
+ CellChangeTimes->{{3.497221044851822*^9, 3.4972210711960897`*^9}, {
+  3.4974538502352953`*^9, 
+  3.497453883107428*^9}},ExpressionUUID->"c949a55d-1da8-406f-8cb1-\
+5225df5fb5c4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Reaction kinetics", "Section",
+ CellChangeTimes->{{3.4972205994926147`*^9, 3.497220606587905*^9}, {
+  3.497222474212389*^9, 3.497222496856555*^9}, {3.497223221783682*^9, 
+  3.497223228541095*^9}, {3.4974523326043377`*^9, 
+  3.497452350411211*^9}},ExpressionUUID->"155981fb-c44b-40b5-96fa-\
+d3910b00b2a3"],
+
+Cell["Rate constants", "Subsection",
+ CellChangeTimes->{{3.4974523528436537`*^9, 3.497452357107559*^9}, {
+  3.497452404966363*^9, 
+  3.497452431747325*^9}},ExpressionUUID->"263cafb6-e202-4522-9916-\
+e202b06a0f60"],
+
+Cell["Unimolecular reactions", "Subsection",
+ CellChangeTimes->{{3.4974524344441967`*^9, 
+  3.497452468492013*^9}},ExpressionUUID->"9fb9bfff-6ef1-4707-9654-\
+19d09b4154c5"],
+
+Cell["Bimolecular reactions", "Subsection",
+ CellChangeTimes->{{3.49745245690277*^9, 
+  3.497452464027389*^9}},ExpressionUUID->"7eed82b3-0759-48e8-9f63-\
+d42aaa3c9d51"],
+
+Cell[CellGroupData[{
+
+Cell["Temperature dependence of the rate constant", "Subsection",
+ CellChangeTimes->{{3.497475083529419*^9, 3.497475099128511*^9}, {
+  3.7233297470821133`*^9, 
+  3.72332975582025*^9}},ExpressionUUID->"526ef24c-9afa-4be2-be66-\
+0cc842a3d175"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"A", ",", "R", ",", "Ea"}], "}"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", ".12", ",", "100"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"A", " ", 
+    RowBox[{"Exp", "[", 
+     FractionBox["Ea", 
+      RowBox[{"R", " ", "T"}]], "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"T", ",", "260", ",", "400"}], "}"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.497475120570238*^9, 3.497475197792905*^9}, {
+  3.4974752564431057`*^9, 
+  3.497475330505622*^9}},ExpressionUUID->"88d18e07-b319-4b22-9f64-\
+ccc60651a453"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJwVjnk01AkAx0dJUcuyQiS/GcMgMjJpdpn6IsdSztRTqVwdjmcOM/Pbt89R
+m5eZtlZ7JLlC1LaOXIXaIqV2GY2jw1YqlUUoo1DTjJ394/u+7/PP9/OlxqSE
+xS+gUChbNPm/oz6oF1DARfv18JnCC2wMG8cO1Wg4aHeXwrecDS7rTtseTy5m
+UgL+eFfCxmHBT5k3vLhwC0kP9s1no2LKSp3uw8X5T092fzrOxuQEPqoCNHst
+goQsARuZw4ffKiO4uI2uVpuNbJQ+1Hkym8jFfdtftI88Wo/haEpaaT4XNUqV
+wnvhelxtYpH0u1w8zoPXO183+Ni4KTqmuRitbhppzl0H2df2rJXWPEQZjTIz
+XrIwbL5d7h/M0zyu7x71ZkFVJmLZZfDQ1fhyuqXYFX95xZraVfOw+MDGzh4d
+V9hWS7fOD/CwaSL2mVnGWhxqK4uU6PIxVFzvr1S4ILlktmlsHR/qLjPPOJEL
+9HPNcpOi+YiU/E5r1nJBNWs1pySHjxHzTsHrbCYGi0hO1TU+HjP6mjmWTHxR
+e2VR0jgfwXIpJ2unM6YetW8OtBBA5/ze9BzpGuyT6U1q+Qkw94Tlqid3wsBB
+7+2JIgFyC/vuhuk74WnvZfPKUgG2qVO41GhHPHtpUVHcKwDfzihhc9VqnNIL
+ulSvlYq28pC8b7RXY1DVYlzslAqh8YaWviQH0PNWeHKiUrG/ZrbK9Z49lJT6
+O3WSVHjq2Jx66GmPo+krZP6NqYicbM1JumYHo3O8MydfpaKD0b/KycUOTqe0
+b9Z+KcS3CWdvEQ0M+DEltUcgxETH2fKLLgyYPP/HikwRwmpboLfwsi1Eu/aP
+eOULITlx43ilny36M1+TrX8L8cbwyta+Phu084pil88KUbXneUFWog32k3SZ
+lCbCJocwvYYlNtBlFKjrQkWgjsVQ6SV0eJQGSevSRMhlSnRk3nQk31Y8jasS
+YenPhyhLhqzh3NhzbHJAhPsGJz1kEmtUtKQ1nV4kRnZkb/gyN2usPGBR9YEl
+Rsqyteb0QRpoQ9NK+2gNB/06c+0EDQzt60aGJ8W4eihgkOdOwwv3iAtmrWKk
+q5b+FjFOhSMYp2ffiOGvn9YpP0eFcHwsWGJBgunr/qA8korg+NFohR+JB3Ef
+owuXUzE43aD4XkDC54ftXY/6CSQ68AObSkmU2Re4V+QQkDglqDu7SYRYUnkv
+wgios+O6c+6RWBAaUtQTSoD/andRhJxEtpf2ZFsIgR354Rue9ZBQ7h16XxpE
+wFGXk67oJxE1dK94XwAB+SsDtdljElyFW/x7TwImBY2q+H81PuWlI/YuBKSz
+NTKHERIZO6ZmLJkE5sMuFr7V8C3VnNTImcCIbjHnuzESpk2+Zp8dCTSLs9N+
+nCBhKWffkdsR2BW+U1U3TeJYaAwvk9D4qiNk4vcknE2iVCIrAj56IYUeH0h4
+BN68mLyKwJq2TZyOGRJ7VA0Hd64kQHFekzbwkcTCo2fEbDMCqVK7LUWfSCR3
++ukzTQmMvqZZxipJ0E64dDBMCPQWmP45/pnEUGVZnqkxAd85w+O1KhLIJxoN
+viLQEr4sSqTW/HFsn1pspPHV6Di5z5NQV2YFUwwJlOlpqeY1rJ8Q0z1nQOA/
+TY0ujQ==
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{260., 10.},
+  PlotRange->{All, All},
+  PlotRangeClipping->True,
+  PlotRangePadding->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.497475291354816*^9, 
+  3.497475330922391*^9}},ExpressionUUID->"815070e9-8b48-4321-877f-\
+89d0ae290256"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell["Reaction paths / Chemical kinetic mechanisms", "Section",
+ CellChangeTimes->{{3.497452320171399*^9, 
+  3.497452329269636*^9}},ExpressionUUID->"251d3632-e8ea-4715-bab1-\
+305401863ae7"],
+
+Cell[CellGroupData[{
+
+Cell["Generating systems of ODE's", "Section",
+ CellChangeTimes->{{3.497220619580944*^9, 
+  3.49722063583659*^9}},ExpressionUUID->"c1866383-253d-401a-bc47-\
+b210225d7790"],
+
+Cell["\<\
+In order to understand the booking type of process used to generate the \
+system ODE's corresponding to a chemical kinetic mechanism. \
+\>", "Text",
+ CellChangeTimes->{{3.49722331319879*^9, 
+  3.497223466797571*^9}},ExpressionUUID->"c27d2b3a-f14f-430f-adf5-\
+3f2ac9bfe96a"],
+
+Cell[CellGroupData[{
+
+Cell["Small example (manual)", "Subsection",
+ CellChangeTimes->{{3.4972232513286047`*^9, 3.4972232540370626`*^9}, {
+  3.49722330745499*^9, 
+  3.497223311340953*^9}},ExpressionUUID->"39778a4f-a29e-4ccb-a3c0-\
+f8f9ea63da06"],
+
+Cell["\<\
+Generate manually the corresponding system of ODE's for this mechanism:\
+\>", "Text",
+ CellChangeTimes->{{3.497452846606513*^9, 
+  3.497452913805715*^9}},ExpressionUUID->"69bd1f25-5f10-4627-9a44-\
+d3103ff429a5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"testReactions", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\"\<N2O5\>\"", "\[Rule]", 
+      RowBox[{"\"\<NO2\>\"", "+", "\"\<NO3\>\""}]}], ",", 
+     RowBox[{
+      RowBox[{"\"\<NO2\>\"", "+", "\"\<NO3\>\""}], "\[Rule]", 
+      "\"\<N2O5\>\""}], ",", 
+     RowBox[{
+      RowBox[{"\"\<NO2\>\"", "+", "\"\<NO3\>\""}], "\[Rule]", 
+      RowBox[{"\"\<NO\>\"", "+", "\"\<O2\>\"", "+", "\"\<NO2\>\""}]}], ",", 
+     RowBox[{
+      RowBox[{"\"\<NO\>\"", "+", "\"\<NO3\>\""}], "\[Rule]", 
+      RowBox[{"2", "\"\<NO2\>\""}]}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"testReactions", "//", "ColumnForm"}]}], "Input",
+ CellChangeTimes->{{3.4973791142020473`*^9, 3.497379263654271*^9}, 
+   3.497379521784408*^9, {3.4973797085987377`*^9, 3.497379813854949*^9}, {
+   3.497380540716609*^9, 
+   3.4973805448302097`*^9}},ExpressionUUID->"a819ade8-5403-491a-8aae-\
+7d1e3d19e85e"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {
+     RowBox[{"\<\"N2O5\"\>", "\[Rule]", 
+      RowBox[{"\<\"NO2\"\>", "+", "\<\"NO3\"\>"}]}]},
+    {
+     RowBox[{
+      RowBox[{"\<\"NO2\"\>", "+", "\<\"NO3\"\>"}], 
+      "\[Rule]", "\<\"N2O5\"\>"}]},
+    {
+     RowBox[{
+      RowBox[{"\<\"NO2\"\>", "+", "\<\"NO3\"\>"}], "\[Rule]", 
+      RowBox[{"\<\"NO\"\>", "+", "\<\"NO2\"\>", "+", "\<\"O2\"\>"}]}]},
+    {
+     RowBox[{
+      RowBox[{"\<\"NO\"\>", "+", "\<\"NO3\"\>"}], "\[Rule]", 
+      RowBox[{"2", " ", "\<\"NO2\"\>"}]}]}
+   },
+   BaselinePosition->{Baseline, {1, 1}},
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}}],
+  ColumnForm[{
+   "N2O5" -> "NO2" + "NO3", "NO2" + "NO3" -> "N2O5", "NO2" + "NO3" -> 
+    "NO" + "NO2" + "O2", "NO" + "NO3" -> 2 "NO2"}],
+  Editable->False]], "Output",
+ CellChangeTimes->{
+  3.497379752812145*^9, 3.497379815033927*^9, 3.497380545665457*^9, 
+   3.4973807164051027`*^9, {3.497452779805139*^9, 
+   3.497452807054975*^9}},ExpressionUUID->"bcf6c9f6-9221-479f-9df5-\
+083c6fc4620b"]
+}, {2}]],
+
+Cell[TextData[{
+ "Assuming the third reaction is very slow compared to the rest, solve SODE \
+for ",
+ Cell[BoxData[
+  FormBox["NO", TraditionalForm]],ExpressionUUID->
+  "06e61f06-577e-4131-9c73-557ba4108c90"],
+ " and ",
+ Cell[BoxData[
+  FormBox["NO3", TraditionalForm]],ExpressionUUID->
+  "f67cdb25-2e74-42e3-8edd-d1e1e1120b34"],
+ " as a system of algebraic equations."
+}], "Text",
+ CellChangeTimes->{{3.4974529168528*^9, 3.49745297437219*^9}, {
+  3.4974530043890533`*^9, 3.497453024756152*^9}, {3.4974532255277233`*^9, 
+  3.497453300187557*^9}},ExpressionUUID->"c54ab085-f085-4616-bd8a-\
+fc88e6f7d52c"],
+
+Cell["The corresponding system of ODE's:", "Text",
+ CellChangeTimes->{{3.4974534848557568`*^9, 
+  3.497453496613206*^9}},ExpressionUUID->"222bf255-f44c-45b6-b81d-\
+9837e7c36f3f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"eqs", "//", "ColumnForm"}]], "Input",
+ CellChangeTimes->{{3.497380356231511*^9, 3.497380356721833*^9}, {
+  3.497380402354636*^9, 
+  3.4973804121481667`*^9}},ExpressionUUID->"bb0492f0-7b62-4b7b-a8f0-\
+7865c9864b9d"],
+
+Cell[BoxData[
+ FormBox[
+  InterpretationBox[GridBox[{
+     {
+      RowBox[{
+       RowBox[{
+        SuperscriptBox["c", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "(", 
+        RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], "\[LongEqual]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"N2O5\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"1", ",", "t"}], ")"}]}], "-", 
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO2\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"2", ",", "t"}], ")"}]}], "-", 
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO2\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"3", ",", "t"}], ")"}]}], "-", 
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"4", ",", "t"}], ")"}]}]}]}]},
+     {
+      RowBox[{
+       RowBox[{
+        SuperscriptBox["c", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "(", 
+        RowBox[{"\<\"NO\"\>", ",", "t"}], ")"}], "\[LongEqual]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO2\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"3", ",", "t"}], ")"}]}], "-", 
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"4", ",", "t"}], ")"}]}]}]}]},
+     {
+      RowBox[{
+       RowBox[{
+        SuperscriptBox["c", 
+         TagBox[
+          RowBox[{"(", 
+           RowBox[{"0", ",", "1"}], ")"}],
+          Derivative],
+         MultilineFunction->None], "(", 
+        RowBox[{"\<\"O2\"\>", ",", "t"}], ")"}], "\[LongEqual]", 
+       RowBox[{
+        RowBox[{"c", "(", 
+         RowBox[{"\<\"NO2\"\>", ",", "t"}], ")"}], " ", 
+        RowBox[{"c", "(", 
+         RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], " ", 
+        RowBox[{"k", "(", 
+         RowBox[{"3", ",", "t"}], ")"}]}]}]}
+    },
+    BaselinePosition->{Baseline, {1, 1}},
+    GridBoxAlignment->{
+     "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}}],
+   ColumnForm[{
+    Derivative[0, 1][$CellContext`c][
+      "NO3", $CellContext`t] == $CellContext`c[
+        "N2O5", $CellContext`t] $CellContext`k[
+        1, $CellContext`t] - ($CellContext`c[
+        "NO2", $CellContext`t] $CellContext`c[
+        "NO3", $CellContext`t]) $CellContext`k[
+       2, $CellContext`t] - ($CellContext`c[
+        "NO2", $CellContext`t] $CellContext`c[
+        "NO3", $CellContext`t]) $CellContext`k[
+       3, $CellContext`t] - ($CellContext`c[
+        "NO", $CellContext`t] $CellContext`c[
+        "NO3", $CellContext`t]) $CellContext`k[4, $CellContext`t], 
+     Derivative[0, 1][$CellContext`c][
+      "NO", $CellContext`t] == ($CellContext`c[
+         "NO2", $CellContext`t] $CellContext`c[
+         "NO3", $CellContext`t]) $CellContext`k[
+        3, $CellContext`t] - ($CellContext`c[
+        "NO", $CellContext`t] $CellContext`c[
+        "NO3", $CellContext`t]) $CellContext`k[4, $CellContext`t], 
+     Derivative[0, 1][$CellContext`c][
+      "O2", $CellContext`t] == ($CellContext`c[
+        "NO2", $CellContext`t] $CellContext`c[
+        "NO3", $CellContext`t]) $CellContext`k[3, $CellContext`t]}],
+   Editable->False], TraditionalForm]], "Output",
+ CellChangeTimes->{{3.497380358162311*^9, 3.497380412522645*^9}, 
+   3.49738063188453*^9, 3.4973806795825367`*^9, 3.497380720732972*^9, 
+   3.497381908110197*^9, 3.497381943774241*^9, 
+   3.4973819789808292`*^9},ExpressionUUID->"59c0f507-f493-4a7c-8e57-\
+3e44fd47a9e2"]
+}, {2}]],
+
+Cell[TextData[{
+ "If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "=", 
+    RowBox[{
+     RowBox[{"\[PartialD]", " ", 
+      RowBox[{"c", "(", 
+       RowBox[{"NO3", ",", "t"}], ")"}]}], "/", 
+     RowBox[{"\[PartialD]", " ", "t"}]}]}], TraditionalForm]],ExpressionUUID->
+  "d9862927-bb54-46b4-80f6-7489d3c8ac8b"],
+ " then using ",
+ StyleBox["Solve", "Program"],
+ " we get:"
+}], "Text",
+ CellChangeTimes->{{3.497453511951394*^9, 3.497453573787462*^9}, {
+  3.4974536470262423`*^9, 
+  3.4974536620039597`*^9}},ExpressionUUID->"baa8c00d-708a-4f8a-bc19-\
+7489d44e7716"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"eqs", "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["c", 
+           TagBox[
+            RowBox[{"(", 
+             RowBox[{"0", ",", "1"}], ")"}],
+            Derivative],
+           MultilineFunction->None], "[", 
+          RowBox[{"\"\<NO3\>\"", ",", "t"}], "]"}], "\[Rule]", "0"}], ",", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["c", 
+           TagBox[
+            RowBox[{"(", 
+             RowBox[{"0", ",", "1"}], ")"}],
+            Derivative],
+           MultilineFunction->None], "[", 
+          RowBox[{"\"\<NO\>\"", ",", "t"}], "]"}], "\[Rule]", "0"}], ",", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["c", 
+           TagBox[
+            RowBox[{"(", 
+             RowBox[{"0", ",", "1"}], ")"}],
+            Derivative],
+           MultilineFunction->None], "[", 
+          RowBox[{"\"\<O2\>\"", ",", "t"}], "]"}], "\[Rule]", "r"}]}], 
+       "}"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"r", ",", 
+       RowBox[{"c", "[", 
+        RowBox[{"\"\<NO3\>\"", ",", "t"}], "]"}], ",", 
+       RowBox[{"c", "[", 
+        RowBox[{"\"\<NO\>\"", ",", "t"}], "]"}]}], "}"}]}], "]"}], "//", 
+   "First"}], "//", "ColumnForm"}]], "Input",
+ CellChangeTimes->{{3.4973819288449593`*^9, 3.497381954786313*^9}, {
+  3.497381987697382*^9, 3.497382038845291*^9}, {3.497382086282875*^9, 
+  3.497382124218688*^9}, {3.4973821557150393`*^9, 3.497382186589087*^9}, {
+  3.497382247753435*^9, 3.497382272587658*^9}, {3.4973823116180973`*^9, 
+  3.497382347652568*^9}, {3.4973823784870243`*^9, 3.497382418430019*^9}, {
+  3.497382491134583*^9, 3.497382506619562*^9}, {3.49745358086036*^9, 
+  3.4974535910226107`*^9}},ExpressionUUID->"3c26789a-9b51-4d0a-8cc4-\
+7bc417e1ebdf"],
+
+Cell[BoxData[
+ FormBox[
+  InterpretationBox[GridBox[{
+     {
+      RowBox[{"r", "\[Rule]", 
+       FractionBox[
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"N2O5\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"1", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"3", ",", "t"}], ")"}]}], 
+        RowBox[{
+         RowBox[{"k", "(", 
+          RowBox[{"2", ",", "t"}], ")"}], "+", 
+         RowBox[{"2", " ", 
+          RowBox[{"k", "(", 
+           RowBox[{"3", ",", "t"}], ")"}]}]}]]}]},
+     {
+      RowBox[{
+       RowBox[{"c", "(", 
+        RowBox[{"\<\"NO\"\>", ",", "t"}], ")"}], "\[Rule]", 
+       FractionBox[
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO2\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"3", ",", "t"}], ")"}]}], 
+        RowBox[{"k", "(", 
+         RowBox[{"4", ",", "t"}], ")"}]]}]},
+     {
+      RowBox[{
+       RowBox[{"c", "(", 
+        RowBox[{"\<\"NO3\"\>", ",", "t"}], ")"}], "\[Rule]", 
+       FractionBox[
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"N2O5\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"k", "(", 
+          RowBox[{"1", ",", "t"}], ")"}]}], 
+        RowBox[{
+         RowBox[{"c", "(", 
+          RowBox[{"\<\"NO2\"\>", ",", "t"}], ")"}], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"k", "(", 
+            RowBox[{"2", ",", "t"}], ")"}], "+", 
+           RowBox[{"2", " ", 
+            RowBox[{"k", "(", 
+             RowBox[{"3", ",", "t"}], ")"}]}]}], ")"}]}]]}]}
+    },
+    BaselinePosition->{Baseline, {1, 1}},
+    GridBoxAlignment->{
+     "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}}],
+   ColumnForm[{$CellContext`r -> ($CellContext`c[
+        "N2O5", $CellContext`t] $CellContext`k[
+        1, $CellContext`t]) ($CellContext`k[
+        3, $CellContext`t]/($CellContext`k[2, $CellContext`t] + 
+       2 $CellContext`k[3, $CellContext`t])), $CellContext`c[
+      "NO", $CellContext`t] -> $CellContext`c[
+       "NO2", $CellContext`t] ($CellContext`k[
+        3, $CellContext`t]/$CellContext`k[4, $CellContext`t]), $CellContext`c[
+      "NO3", $CellContext`t] -> ($CellContext`c[
+        "N2O5", $CellContext`t]/$CellContext`c[
+       "NO2", $CellContext`t]) ($CellContext`k[
+        1, $CellContext`t]/($CellContext`k[2, $CellContext`t] + 
+       2 $CellContext`k[3, $CellContext`t]))}],
+   Editable->False], TraditionalForm]], "Output",
+ CellChangeTimes->{{3.497382495724238*^9, 3.49738250723073*^9}, 
+   3.497383345335598*^9, 3.4974535925344763`*^9, 
+   3.4974536229974213`*^9},ExpressionUUID->"6dba23f5-1196-4c9e-a2ff-\
+810b6a1208b7"]
+}, {2}]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Larger example (programming)", "Subsection",
+ CellChangeTimes->{{3.497223260076782*^9, 
+  3.497223290916754*^9}},ExpressionUUID->"b5f497b6-63f0-403b-af59-\
+6715c68239ca"],
+
+Cell["\<\
+From the example above we can see that if we want to automatically generate \
+the system of ODE's that corresponds to a chemical mechanism we have to \
+program various bookkeeping functionalities. Since each ODE is produced for a \
+given compound, we need to find all reactions which have that compound.\
+\>", "Text",
+ CellChangeTimes->{{3.497481416417276*^9, 3.4974815621990137`*^9}, {
+  3.4974834093594007`*^9, 3.4974834451402073`*^9}, {3.4974836262238073`*^9, 
+  3.49748365792771*^9}},ExpressionUUID->"7729bb0a-55b4-4032-a50b-\
+41eea9cffeee"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exercises", "Section",
+ CellChangeTimes->{{3.497453712645732*^9, 
+  3.4974537145555143`*^9}},ExpressionUUID->"d468d889-3efc-4991-bbf1-\
+45593586215d"],
+
+Cell["\<\
+Extend the SODE generator to use variables for temperature and altitude (or \
+pressure)\
+\>", "Subsection",
+ CellChangeTimes->{{3.497453720462977*^9, 
+  3.497453767188024*^9}},ExpressionUUID->"9a5ac29b-225f-496b-bd9a-\
+42a5f2365e0b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Reference", "ReferenceSection",
+ CellChangeTimes->{{3.497220546800753*^9, 
+  3.497220548196776*^9}},ExpressionUUID->"e43d727b-4338-4f55-a77a-\
+a5d60a3d0998"],
+
+Cell[CellGroupData[{
+
+Cell["[1] From Air Pollution to Climate Change", "Reference",
+ CellChangeTimes->{{3.497220566187983*^9, 3.497220572004292*^9}, {
+  3.497452582382345*^9, 
+  3.49745260337157*^9}},ExpressionUUID->"752ebc40-bd2d-44e7-8560-\
+2e9f19f64d5f"],
+
+Cell["Other chemical kinetics groups", "Reference",
+ CellChangeTimes->{{3.4974540534191217`*^9, 
+  3.497454065275667*^9}},ExpressionUUID->"fd0a7e1c-4d69-4148-8e8e-\
+66814af3ea0b"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1344, 1114},
+WindowMargins->{{Automatic, 370}, {Automatic, 0}},
+Magnification:>1.25 Inherited,
+FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+10, 2017)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Users", "antonov", 
+   "Documents", "MathematicalTreatementOfChemicalProblems"}, 
+  "BookStylesheet.nb", CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 272, 6, 157, "Title",ExpressionUUID->"9bbdbbf4-c452-44ab-9aa7-3a7ede3fedcc"],
+Cell[842, 30, 210, 4, 46, "Author",ExpressionUUID->"962f543b-9270-4031-af3d-b16eae6ddd61"],
+Cell[CellGroupData[{
+Cell[1077, 38, 168, 3, 20, "Author",ExpressionUUID->"98aacca5-db2a-4af7-96ef-e0d8565f8f26"],
+Cell[1248, 43, 282, 5, 16, "Institution",ExpressionUUID->"c85b625a-9b63-4fe0-a61a-a981e50e9a04"],
+Cell[1533, 50, 597, 10, 37, "Abstract",ExpressionUUID->"5652112f-aea2-40ca-9a24-3a8d729bdd45"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2167, 65, 159, 3, 85, "Section",ExpressionUUID->"c6fc4ead-1705-4ff6-8bba-6ee3e6b779ab"],
+Cell[2329, 70, 179, 3, 38, "Text",ExpressionUUID->"5383b38b-a6c6-4d6a-b31f-c129c60dc687"],
+Cell[2511, 75, 201, 3, 38, "Text",ExpressionUUID->"cc1d3523-10fc-47f3-ba78-ba2ad96a4739"],
+Cell[2715, 80, 613, 11, 86, "Text",ExpressionUUID->"54bdff9e-2f31-444c-8ca0-4b279f49a334"],
+Cell[3331, 93, 244, 4, 38, "Text",ExpressionUUID->"c949a55d-1da8-406f-8cb1-5225df5fb5c4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3612, 102, 310, 5, 85, "Section",ExpressionUUID->"155981fb-c44b-40b5-96fa-d3910b00b2a3"],
+Cell[3925, 109, 213, 4, 44, "Subsection",ExpressionUUID->"263cafb6-e202-4522-9916-e202b06a0f60"],
+Cell[4141, 115, 172, 3, 33, "Subsection",ExpressionUUID->"9fb9bfff-6ef1-4707-9654-19d09b4154c5"],
+Cell[4316, 120, 168, 3, 33, "Subsection",ExpressionUUID->"7eed82b3-0759-48e8-9f63-d42aaa3c9d51"],
+Cell[CellGroupData[{
+Cell[4509, 127, 241, 4, 33, "Subsection",ExpressionUUID->"526ef24c-9afa-4be2-be66-0cc842a3d175"],
+Cell[CellGroupData[{
+Cell[4775, 135, 674, 20, 82, "Input",ExpressionUUID->"88d18e07-b319-4b22-9f64-ccc60651a453"],
+Cell[5452, 157, 2092, 40, 296, "Output",ExpressionUUID->"815070e9-8b48-4321-877f-89d0ae290256"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[7583, 202, 189, 3, 85, "Section",ExpressionUUID->"251d3632-e8ea-4715-bab1-305401863ae7"],
+Cell[CellGroupData[{
+Cell[7797, 209, 171, 3, 46, "Section",ExpressionUUID->"c1866383-253d-401a-bc47-b210225d7790"],
+Cell[7971, 214, 283, 6, 38, "Text",ExpressionUUID->"c27d2b3a-f14f-430f-adf5-3f2ac9bfe96a"],
+Cell[CellGroupData[{
+Cell[8279, 224, 222, 4, 44, "Subsection",ExpressionUUID->"39778a4f-a29e-4ccb-a3c0-f8f9ea63da06"],
+Cell[8504, 230, 221, 5, 38, "Text",ExpressionUUID->"69bd1f25-5f10-4627-9a44-d3103ff429a5"],
+Cell[CellGroupData[{
+Cell[8750, 239, 918, 21, 162, "Input",ExpressionUUID->"a819ade8-5403-491a-8aae-7d1e3d19e85e"],
+Cell[9671, 262, 1098, 30, 99, "Output",ExpressionUUID->"bcf6c9f6-9221-479f-9df5-083c6fc4620b"]
+}, {2}]],
+Cell[10781, 295, 603, 15, 38, "Text",ExpressionUUID->"c54ab085-f085-4616-bd8a-fc88e6f7d52c"],
+Cell[11387, 312, 178, 3, 38, "Text",ExpressionUUID->"222bf255-f44c-45b6-b81d-9837e7c36f3f"],
+Cell[CellGroupData[{
+Cell[11590, 319, 238, 5, 75, "Input",ExpressionUUID->"bb0492f0-7b62-4b7b-a8f0-7865c9864b9d"],
+Cell[11831, 326, 4334, 116, 87, "Output",ExpressionUUID->"59c0f507-f493-4a7c-8e57-3e44fd47a9e2"]
+}, {2}]],
+Cell[16177, 445, 565, 18, 44, "Text",ExpressionUUID->"baa8c00d-708a-4f8a-bc19-7489d44e7716"],
+Cell[CellGroupData[{
+Cell[16767, 467, 1843, 50, 146, "Input",ExpressionUUID->"3c26789a-9b51-4d0a-8cc4-7bc417e1ebdf"],
+Cell[18613, 519, 2726, 73, 117, "Output",ExpressionUUID->"6dba23f5-1196-4c9e-a2ff-810b6a1208b7"]
+}, {2}]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21385, 598, 176, 3, 44, "Subsection",ExpressionUUID->"b5f497b6-63f0-403b-af59-6715c68239ca"],
+Cell[21564, 603, 555, 9, 86, "Text",ExpressionUUID->"7729bb0a-55b4-4032-a50b-41eea9cffeee"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22168, 618, 156, 3, 85, "Section",ExpressionUUID->"d468d889-3efc-4991-bbf1-45593586215d"],
+Cell[22327, 623, 243, 6, 44, "Subsection",ExpressionUUID->"9a5ac29b-225f-496b-bd9a-42a5f2365e0b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22607, 634, 163, 3, 84, "ReferenceSection",ExpressionUUID->"e43d727b-4338-4f55-a77a-a5d60a3d0998"],
+Cell[CellGroupData[{
+Cell[22795, 641, 235, 4, 21, "Reference",ExpressionUUID->"752ebc40-bd2d-44e7-8560-2e9f19f64d5f"],
+Cell[23033, 647, 179, 3, 21, "Reference",ExpressionUUID->"fd0a7e1c-4d69-4148-8e8e-66814af3ea0b"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
